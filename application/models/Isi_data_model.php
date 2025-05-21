@@ -54,9 +54,15 @@ class Isi_data_model extends CI_Model
     }
     public function recap($id, $data)
     {
+        // Update tabel 'alternatif'
+        $this->db->where('siswa_id', $id);
+        $this->db->update('alternatif', $data);
+
+        // Update tabel 'siswa'
         $this->db->where('id', $id);
         return $this->db->update('siswa', $data);
     }
+
     // Tambahkan fungsi ini untuk mengambil nilai ENUM penghasilan_orang_tua
     public function get_enum_penghasilan()
     {

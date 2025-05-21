@@ -48,6 +48,7 @@ class Penilaian_model extends CI_Model
     public function hapus($id, $data)
     {
         $this->db->where('id_alternatif', $id);
-        return $this->db->update('alternatif', $data);
+        return $this->db->delete('alternatif');
+
     }
 }

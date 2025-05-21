@@ -49,8 +49,8 @@
                         <td><?= htmlspecialchars($siswa->jumlah_tanggungan) ?></td>
                         <td><?= htmlspecialchars($siswa->kepemilikan_rumah) ?></td>
                         <td><?= htmlspecialchars($siswa->nilai_rapor) ?></td>
-                        <td><?= is_numeric($siswa->nilai_hasil) ? number_format($siswa->nilai_hasil, 4) : '-' ?></td>
-                        <td><?= date('d-M-Y', strtotime($siswa->created_at)) ?></td>
+                        <td><?= $siswa->nilai ?></td>
+                        <td><?= date('d-M-Y', strtotime($siswa->date)) ?></td>
                     </tr>
                     <?php endforeach; ?>
 

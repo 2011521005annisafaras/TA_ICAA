@@ -13,14 +13,16 @@ class Penilaian extends CI_Controller
         $this->load->model('Penilaian_model');
         $this->load->model('Isi_data_model');
         $this->load->model('Alternatif_model');
+        $this->load->model('Recap_model');
+        $this->load->model('Perhitungan_model');
 
         if ($this->session->userdata('id_user_level') != "1") {
             ?>
-            <script type="text/javascript">
-                alert('Anda tidak berhak mengakses halaman ini!');
-                window.location = '<?php echo base_url("Login/home"); ?>'
-            </script>
-            <?php
+<script type="text/javascript">
+alert('Anda tidak berhak mengakses halaman ini!');
+window.location = '<?php echo base_url("Login/home"); ?>'
+</script>
+<?php
         }
     }
 
@@ -78,9 +80,23 @@ class Penilaian extends CI_Controller
 
         ];
         $alternatif = $this->Alternatif_model->get_by_id($id);
+        $hasil = $this->Perhitungan_model->hasil_id($id);
+        $siswa = $this->Isi_data_model->get_by_id($alternatif->siswa_id);
 
-        $this->Isi_data_model->recap($alternatif->siswa_id, $data);
+        $data = [
+            'nisn' => $siswa->nisn,
+            'penghasilan_ortu' => $siswa->penghasilan_ortu,
+            'jumlah_tanggungan' => $siswa->jumlah_tanggungan,
+            'kepemilikan_rumah' => $siswa->kepemilikan_rumah,
+            'nilai_rapor' => $siswa->nilai_rapor,
+            'nilai' => $hasil->nilai,
+            'date' => $siswa->created_at,
+            'nama' => $siswa->nama,
+        ];
+        $result = $this->Recap_model->insert($data);
+        $this->Isi_data_model->delete($siswa->id);
         if ($this->Penilaian_model->hapus($id, $data)) {
+
             $this->session->set_flashdata('penilaian_msg', '
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Sukses!</strong> Data berhasil dipindahkan ke recap.

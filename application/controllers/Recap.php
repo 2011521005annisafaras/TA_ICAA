@@ -13,7 +13,7 @@ class Recap extends CI_Controller
         parent::__construct();
         $this->load->library('pagination');
         $this->load->library('form_validation');
-        $this->load->model('Isi_data_model');
+        $this->load->model('Recap_model');
         $this->load->model('Alternatif_model');
         $this->load->model('Penilaian_model');
 
@@ -31,7 +31,7 @@ window.location = '<?php echo base_url("Login/home"); ?>'
     {
         $data = [
             'page' => "Recap",
-            'list' => $this->Isi_data_model->recap_all(),
+            'list' => $this->Recap_model->tampil(),
         ];
         $this->load->view('recap/index', $data);
     }
@@ -39,7 +39,7 @@ window.location = '<?php echo base_url("Login/home"); ?>'
     public function export_excel()
     {
 
-        $list = $this->Isi_data_model->recap_all();
+        $list = $this->Recap_model->tampil();
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -66,8 +66,8 @@ window.location = '<?php echo base_url("Login/home"); ?>'
             $sheet->setCellValue('E' . $row, $siswa->jumlah_tanggungan);
             $sheet->setCellValue('F' . $row, $siswa->kepemilikan_rumah);
             $sheet->setCellValue('G' . $row, $siswa->nilai_rapor);
-            $sheet->setCellValue('H' . $row, $siswa->nilai_hasil);
-            $sheet->setCellValue('I' . $row, date('d-m-Y', strtotime($siswa->created_at)));
+            $sheet->setCellValue('H' . $row, $siswa->nilai);
+            $sheet->setCellValue('I' . $row, date('d-m-Y', strtotime($siswa->date)));
             $row++;
         }
 
