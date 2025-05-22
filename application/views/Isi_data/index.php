@@ -14,7 +14,7 @@
     <?php
     // Ambil data siswa berdasarkan user yang sedang login
     $user_id = $this->session->userdata('id_user');
-    $siswa = $this->Isi_data_model->get_siswa_by_user_active($user_id);
+    $siswa = $this->Isi_data_model->get_siswa_by_user($user_id);
     ?>
 
     <div class="card-body">
